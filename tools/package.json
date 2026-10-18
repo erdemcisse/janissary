@@ -1,0 +1,25 @@
+{
+  "name": "@janissary/tools",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "bots": "tsx bot.ts",
+    "loadtest": "tsx loadtest.ts",
+    "build": "tsc --noEmit",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@gltf-transform/core": "^4.4.2",
+    "@gltf-transform/functions": "^4.4.2",
+    "@janissary/shared": "workspace:*",
+    "meshoptimizer": "^0.22.0",
+    "sharp": "^0.34.5",
+    "ws": "8.18.3"
+  },
+  "devDependencies": {
+    "@types/node": "22.17.2",
+    "@types/ws": "8.18.1",
+    "tsx": "4.20.4"
+  }
+}

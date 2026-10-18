@@ -1,0 +1,20 @@
+{
+  "name": "janissary-game",
+  "version": "0.0.0",
+  "private": true,
+  "packageManager": "pnpm@11.8.0",
+  "scripts": {
+    "build": "pnpm -r --if-present build",
+    "typecheck": "pnpm -r --if-present typecheck",
+    "test": "pnpm -r --if-present test",
+    "audit:assets": "node tools/check-assets.mjs",
+    "dev": "concurrently -k -n server,client -c yellow,cyan \"pnpm --filter @janissary/server dev\" \"pnpm --filter @janissary/client dev\"",
+    "bots": "pnpm --filter @janissary/tools bots",
+    "loadtest": "pnpm --filter @janissary/tools loadtest"
+  },
+  "devDependencies": {
+    "concurrently": "9.2.1",
+    "typescript": "5.9.2",
+    "vitest": "3.2.4"
+  }
+}

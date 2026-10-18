@@ -1,0 +1,13 @@
+packages:
+  - client
+  - server
+  - shared
+  - tools
+  - web
+
+allowBuilds:
+  better-sqlite3: true
+  esbuild: true
+  sharp: true
+
+injectWorkspacePackages: true

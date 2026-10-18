@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- HUD-critical fonts are same-origin and preloaded so the HUD never
+         flashes unstyled type; latin-ext subsets load on demand. Licenses
+         (OFL) logged in CREDITS.md. -->
+    <link rel="preload" href="/fonts/alegreya-sans-400-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/alegreya-sans-500-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/alegreya-sans-700-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/alegreya-sans-800-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/ibm-plex-mono-400-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/ibm-plex-mono-500-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/ibm-plex-mono-600-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/ibm-plex-mono-700-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <!-- Phase 8e-25 (D21): the display faces (Reem Kufi, Uncial Antiqua) are
+         only used by the game shell after join, so they are NOT preloaded —
+         preloading them caused "preloaded but not used" warnings on the
+         connect paint. Alegreya 800 and Plex Mono 500 ARE rendered at load
+         (the join headline and mono labels), so they were added above. -->
+    <!-- Phase 8e-25 (A-006): the medieval skin images (frame + class tiles)
+         were preloaded at page load, but nothing consumes them until after
+         join — Chrome logged eight "preloaded but not used" warnings and the
+         fetch competed with the HUD-critical fonts. They are small same-origin
+         webps fetched on first use (the class picker), so the preloads are
+         gone. The fonts above stay: the HUD renders them at load. -->
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%235f963f'/%3E%3Cpath d='M16 5l9 5v7c0 6-4 9-9 10-5-1-9-4-9-10v-7z' fill='%23e8dcc0' stroke='%23404038' stroke-width='1.5'/%3E%3Cpath d='M16 9v10M11 12l5 3 5-3' stroke='%23404038' stroke-width='1.5' fill='none'/%3E%3C/svg%3E" />
+    <title>Janissary — Core Combat</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

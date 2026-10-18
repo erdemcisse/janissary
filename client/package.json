@@ -1,0 +1,26 @@
+{
+  "name": "@janissary/client",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "pnpm audit:assets && vite build --base=/play/",
+    "dev": "vite --host 0.0.0.0",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "audit:assets": "node ../tools/check-assets.mjs"
+  },
+  "dependencies": {
+    "@janissary/shared": "workspace:*",
+    "@vitejs/plugin-react": "5.0.2",
+    "react": "19.1.1",
+    "react-dom": "19.1.1",
+    "three": "0.179.1",
+    "vite": "7.1.3"
+  },
+  "devDependencies": {
+    "@types/react": "19.1.10",
+    "@types/react-dom": "19.1.7",
+    "@types/three": "0.179.0"
+  }
+}

@@ -1,0 +1,42 @@
+# Phase 8e-20/8e-21 (ADR 0013): one domain, one Caddy. "/" serves the landing
+# static export, "/play" the game client bundle, and the API + WebSocket go
+# to the game server container. Static roots are baked into the server image
+# and shared with Caddy via volumes_from (docker-compose).
+{$DOMAIN:localhost} {
+  log {
+    output stdout
+    format json
+  }
+  encode zstd gzip
+  header {
+    Strict-Transport-Security "max-age=31536000; includeSubDomains"
+    X-Content-Type-Options "nosniff"
+    Referrer-Policy "no-referrer"
+    -Server
+  }
+
+  # Game API routes (same-origin HTTP calls from the client).
+  @api path /health /metrics /leaderboard /war-history /auth/* /clans/* /social/* /skins* /dev/bots*
+  reverse_proxy @api server:9001
+
+  # WebSocket upgrade: the client connects to wss://host (path "/").
+  @ws {
+    header Connection *Upgrade*
+    header Upgrade websocket
+  }
+  reverse_proxy @ws server:9001
+
+  # The compiled game client (Vite build with base /play/).
+  handle /play/* {
+    file_server {
+      root /app/www/play
+    }
+  }
+
+  # The landing static export.
+  handle {
+    file_server {
+      root /app/www/landing
+    }
+  }
+}

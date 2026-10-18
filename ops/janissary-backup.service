@@ -1,0 +1,10 @@
+[Unit]
+Description=Consistent backup of the Janissary SQLite database
+After=docker.service
+
+[Service]
+Type=oneshot
+ExecStart=/opt/janissary/ops/backup-sqlite.sh
+Nice=10
+IOSchedulingClass=best-effort
+IOSchedulingPriority=7

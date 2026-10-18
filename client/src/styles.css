@@ -1,0 +1,1456 @@
+/* ============================================================
+   Janissary — HUD & UI design system (Phase 8c-1)
+   Governs: docs/design/visual-feel-bible.md
+   Three-tier type: Alegreya Sans (body) · IBM Plex Mono (HUD
+   numerals) · Reem Kufi / Uncial Antiqua (faction display).
+   Neutral stone/parchment chrome; faction color only signals
+   ownership. All licenses OFL — see docs/asset-credits.md.
+   ============================================================ */
+
+@font-face { font-family: 'Alegreya Sans'; font-style: normal; font-weight: 400; font-display: optional; src: url('/fonts/alegreya-sans-400-latin.woff2') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: 'Alegreya Sans'; font-style: normal; font-weight: 400; font-display: swap; src: url('/fonts/alegreya-sans-400-latin-ext.woff2') format('woff2'); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family: 'Alegreya Sans'; font-style: normal; font-weight: 500; font-display: optional; src: url('/fonts/alegreya-sans-500-latin.woff2') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: 'Alegreya Sans'; font-style: normal; font-weight: 500; font-display: swap; src: url('/fonts/alegreya-sans-500-latin-ext.woff2') format('woff2'); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family: 'Alegreya Sans'; font-style: normal; font-weight: 700; font-display: optional; src: url('/fonts/alegreya-sans-700-latin.woff2') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: 'Alegreya Sans'; font-style: normal; font-weight: 700; font-display: swap; src: url('/fonts/alegreya-sans-700-latin-ext.woff2') format('woff2'); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family: 'Alegreya Sans'; font-style: normal; font-weight: 800; font-display: swap; src: url('/fonts/alegreya-sans-800-latin.woff2') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: 'Alegreya Sans'; font-style: normal; font-weight: 800; font-display: swap; src: url('/fonts/alegreya-sans-800-latin-ext.woff2') format('woff2'); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 400; font-display: optional; src: url('/fonts/ibm-plex-mono-400-latin.woff2') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 400; font-display: swap; src: url('/fonts/ibm-plex-mono-400-latin-ext.woff2') format('woff2'); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 500; font-display: swap; src: url('/fonts/ibm-plex-mono-500-latin.woff2') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 500; font-display: swap; src: url('/fonts/ibm-plex-mono-500-latin-ext.woff2') format('woff2'); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 600; font-display: optional; src: url('/fonts/ibm-plex-mono-600-latin.woff2') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 600; font-display: swap; src: url('/fonts/ibm-plex-mono-600-latin-ext.woff2') format('woff2'); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 700; font-display: optional; src: url('/fonts/ibm-plex-mono-700-latin.woff2') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 700; font-display: swap; src: url('/fonts/ibm-plex-mono-700-latin-ext.woff2') format('woff2'); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family: 'Reem Kufi'; font-style: normal; font-weight: 400 700; font-display: swap; src: url('/fonts/reem-kufi-400700-latin.woff2') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: 'Reem Kufi'; font-style: normal; font-weight: 400 700; font-display: swap; src: url('/fonts/reem-kufi-400700-latin-ext.woff2') format('woff2'); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family: 'Uncial Antiqua'; font-style: normal; font-weight: 400; font-display: swap; src: url('/fonts/uncial-antiqua-400-latin.woff2') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: 'Uncial Antiqua'; font-style: normal; font-weight: 400; font-display: swap; src: url('/fonts/uncial-antiqua-400-latin-ext.woff2') format('woff2'); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+
+:root {
+  /* Type tiers */
+  --font-body: 'Alegreya Sans', 'Segoe UI', ui-sans-serif, system-ui, sans-serif;
+  --font-hud: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-display-ot: 'Reem Kufi', 'Alegreya Sans', ui-sans-serif, sans-serif;
+  --font-display-bz: 'Uncial Antiqua', Georgia, serif;
+
+  /* Medieval manuscript chrome (Phase 8e-14) — palette sampled from the
+     owner's frame render (tools/prep-ui.mjs --analyze): dark bronze border
+     ground #110b06, vignette bronze #271b11, center parchment #312313 (dark —
+     light ink stays legible on it), brick inlay #7b522a, filigree gold
+     #b88b58 with bright accents #d3a367. Icon-tile parchment #99845e. */
+  --bronze-deep: #110b06;
+  --bronze-panel: #201709;
+  --parchment-deep: #312313;
+  --parchment-tile: #99845e;
+  --brick: #7b4a26;
+  --filigree: #b88b58;
+
+  /* Neutral bronze/parchment chrome — never faction-tinted */
+  --chrome-bg: linear-gradient(165deg, rgba(46, 34, 20, 0.9), rgba(22, 16, 9, 0.92));
+  --chrome-bg-solid: #201709;
+  --chrome-line: rgba(201, 180, 138, 0.26);
+  --chrome-line-strong: rgba(201, 180, 138, 0.48);
+  --chrome-hi: rgba(240, 222, 178, 0.09);
+  --ink: #efe6d2;
+  --ink-dim: #c0b295;
+  --ink-faint: #8f8570;
+  --gold: #c19a52;
+  --gold-bright: #e6bd7a;
+  --ok: #9dd0a5;
+  --err: #f0837a;
+
+  /* Faction identity — Ottoman amber-red / Byzantine purple-gold.
+     Used ONLY where a surface signals ownership or allegiance. */
+  --team-ot: #e0695c;
+  --team-ot-deep: #b43a32;
+  --team-ot-soft: rgba(224, 105, 92, 0.16);
+  --team-bz: #9a7bd8;
+  --team-bz-deep: #5e3a99;
+  --team-bz-soft: rgba(154, 123, 216, 0.16);
+  --team-gold: #f0b35a;
+
+  /* Squad identity (Phase 8c-7) — the one green token every squad surface
+     reads (nameplates, minimap, scoreboard). Kept off the green team fills
+     by construction: no team ever renders green. */
+  --team-squad: #63e07a;
+  --team-squad-deep: #2f9e4a;
+
+  /* The owner's ornate frame ships as one 9-slice border-image source,
+     /ui/frame-ornate.webp (2560×1440). Slice insets 320/300/320/300 are
+     measured by tools/prep-ui.mjs so every corner medallion + edge band
+     stays inside the slice region; `fill` variants also draw the dark
+     center parchment as the panel interior. Rules below use literal
+     values — this look is the phase deliverable and must not depend on
+     var() substitution inside border-image. */
+
+  /* Shape & motion */
+  --r-panel: 8px;
+  --r-chip: 5px;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-fast: 150ms;
+  --dur-med: 280ms;
+
+  /* Systemic z layers */
+  --z-names: 2;
+  --z-hud: 6;
+  --z-feed: 7;
+  --z-toast: 9;
+  --z-death: 12;
+  --z-ceremony: 15;
+  --z-menu: 20;
+  --z-modal: 30;
+
+  font-family: var(--font-body);
+  color: var(--ink);
+  background: #17110a;
+  font-synthesis: none;
+}
+
+/* Colorblind-safe alternate team mapping (Okabe–Ito vermillion vs sky
+   blue — stays distinguishable under deuteranopia/protanopia). */
+body.palette-cb {
+  --team-ot: #d55e00;
+  --team-ot-deep: #a34a00;
+  --team-ot-soft: rgba(213, 94, 0, 0.18);
+  --team-bz: #56b4e9;
+  --team-bz-deep: #1f6a96;
+  --team-bz-soft: rgba(86, 180, 233, 0.16);
+  /* Squad under deuteranopia/protanopia: cyan-teal, distinct from the
+     vermillion/sky-blue team pair AND from the territory fills. */
+  --team-squad: #4adede;
+  --team-squad-deep: #1f9fa0;
+}
+
+* { box-sizing: border-box; }
+html, body, #root { width: 100%; height: 100%; margin: 0; overflow: hidden; }
+button, input, select { font: inherit; }
+button { cursor: pointer; }
+h1, h2, h3 { font-weight: 600; }
+
+/* ---------- shared chrome ---------- */
+
+.hud-panel {
+  border: 1px solid var(--chrome-line);
+  border-radius: var(--r-panel);
+  background: var(--chrome-bg);
+  box-shadow: inset 0 1px 0 var(--chrome-hi), 0 10px 28px rgba(0, 0, 0, 0.42);
+  backdrop-filter: blur(6px);
+}
+
+.eyebrow {
+  color: var(--gold);
+  font-family: var(--font-hud);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+/* faction display-face helpers (ceremony/headings only, never body text) */
+.display-ot { font-family: var(--font-display-ot); letter-spacing: 0.02em; }
+.display-bz { font-family: var(--font-display-bz); letter-spacing: 0.02em; }
+
+/* ---------- connect screen ---------- */
+
+.connect-shell {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  /* Phase 8e-25 (D1): short windows must not clip the join + restore cards —
+     the shell scrolls when the content exceeds the viewport height. */
+  overflow-y: auto;
+  padding: 24px 0;
+  background:
+    radial-gradient(1200px 700px at 50% -10%, rgba(230, 189, 122, 0.12), transparent 60%),
+    linear-gradient(120deg, rgba(26, 19, 11, 0.94), rgba(58, 44, 26, 0.75)),
+    repeating-linear-gradient(45deg, #3a2e1b 0 1px, transparent 1px 32px),
+    #5d4a2e;
+}
+/* Connect/upgrade cards carry the ornate frame with its dark parchment
+   center — the measured fill is dark enough that the light ink stack keeps
+   its contrast (verified by tools/ui-contrast-check.mjs). */
+.connect-card {
+  width: min(460px, calc(100vw - 40px));
+  padding: 36px;
+  border: 26px solid transparent;
+  border-radius: 0;
+  border-image: url("/ui/frame-ornate.webp") 320 300 320 300 fill / 26px 24px stretch;
+  background: none;
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.45);
+}
+.connect-card h1 {
+  margin: 10px 0;
+  font-size: 40px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+.connect-card .lede { color: var(--ink-dim); line-height: 1.55; }
+.connect-card label { display: grid; gap: 8px; margin-top: 22px; color: var(--ink-dim); font-size: 13px; font-weight: 600; }
+.connect-card input, .connect-card select {
+  width: 100%;
+  padding: 12px 14px;
+  color: var(--ink);
+  border: 1px solid var(--chrome-line-strong);
+  border-radius: var(--r-chip);
+  outline: none;
+  background: rgba(16, 11, 6, 0.6);
+  font-weight: 500;
+}
+.connect-card input:focus, .connect-card select:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(217, 184, 109, 0.14); }
+.connect-card button[type="submit"] {
+  width: 100%;
+  margin-top: 18px;
+  padding: 13px;
+  border: 0;
+  border-radius: var(--r-chip);
+  color: #1a201a;
+  background: linear-gradient(180deg, var(--gold-bright), var(--gold));
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  transition: filter var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
+}
+.connect-card button[type="submit"]:hover { filter: brightness(1.06); }
+.connect-card button[type="submit"]:active { transform: scale(0.985); }
+.error { color: var(--err); font-size: 13px; font-weight: 600; }
+.war-tally { margin-top: 18px; color: var(--ink-faint); font: 500 12px var(--font-hud); text-align: center; }
+.war-tally .ot { color: var(--team-ot); } .war-tally .bz { color: var(--team-bz); }
+.restore-card {
+  width: min(460px, calc(100vw - 40px));
+  margin-top: 12px;
+  padding: 12px 14px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  border: 1px solid var(--chrome-line);
+  border-radius: var(--r-panel);
+  background: rgba(26, 18, 10, 0.8);
+}
+.restore-card strong { font-size: 13px; }
+.restore-card input { min-width: 0; flex: 1; padding: 9px 11px; color: var(--ink); border: 1px solid var(--chrome-line); border-radius: var(--r-chip); background: rgba(16, 11, 6, 0.6); outline: none; }
+.restore-card input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(217, 184, 109, 0.14); }
+.restore-card button { padding: 9px 13px; border: 1px solid var(--chrome-line-strong); border-radius: var(--r-chip); color: var(--gold-bright); background: rgba(217, 184, 109, 0.1); font-weight: 700; }
+.restore-card button:disabled { opacity: 0.55; cursor: wait; }
+.restore-card small { display: block; color: var(--ok); }
+
+/* ---------- game shell ---------- */
+
+.game-shell, .game-container { position: relative; width: 100%; height: 100%; }
+.game-container canvas { display: block; width: 100%; height: 100%; }
+.game-container .name-layer { position: absolute; inset: 0; pointer-events: none; z-index: var(--z-names); }
+
+/* ---------- reticle & hit/kill markers ----------
+   Hit and kill read as distinct silhouettes from peripheral vision:
+   hit = four thin diagonal ticks; kill = the same ticks locked inside a
+   rotated diamond, heavier weight, faction-warm. */
+
+.reticle {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  width: 62px;
+  height: 62px;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: var(--z-hud);
+}
+.reticle .ret-ornament { fill: none; stroke: rgba(153, 112, 53, 0.4); stroke-width: 1; stroke-linecap: round; }
+.reticle .ret-spread path { fill: rgba(205, 157, 72, 0.92); stroke: rgba(45, 27, 13, 0.95); stroke-width: 0.9; paint-order: stroke; transition: d 110ms ease-out; }
+.reticle .ret-dot { fill: rgba(230, 193, 115, 0.98); stroke: rgba(45, 27, 13, 0.96); stroke-width: 1.2; paint-order: stroke; transition: fill 120ms ease-out, opacity 120ms ease-out; }
+.reticle .ret-bore { fill: #fff3c7; }
+/* Pan empty after firing: the dot hollows out until the reload completes. */
+.reticle .ret-dot.empty { fill: rgba(255, 255, 255, 0.18); }
+/* Reload radial sweep (Phase 8e-1): progress is snapshot-driven (20 Hz);
+   the short transition smooths the tick steps between snapshots. */
+.reticle .ret-reload {
+  fill: none;
+  stroke: var(--gold-bright);
+  stroke-width: 2.6;
+  stroke-linecap: round;
+  stroke-dasharray: 157.1;
+  transform: rotate(-90deg);
+  transform-origin: center;
+  transition: stroke-dashoffset 70ms linear;
+  opacity: 0.9;
+}
+/* Melee swing-cooldown sweep (Phase 8e-3): same radial grammar as the reload
+   ring, in cold steel so the two never read as the same state. */
+.reticle .ret-melee {
+  fill: none;
+  stroke: #b8c4cc;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-dasharray: 157.1;
+  transform: rotate(-90deg);
+  transform-origin: center;
+  transition: stroke-dashoffset 70ms linear;
+  opacity: 0.75;
+}
+/* READY flash: a bright ring that pops once at reload completion. */
+.reticle .ret-ready {
+  fill: none;
+  stroke: #ffe9b0;
+  stroke-width: 2.2;
+  opacity: 0;
+  animation: ret-ready-flash 450ms var(--ease-out) forwards;
+  transform-origin: center;
+}
+@keyframes ret-ready-flash {
+  0% { transform: scale(0.72); opacity: 0.95; }
+  100% { transform: scale(1.25); opacity: 0; }
+}
+.reticle .ret-hit, .reticle .ret-kill { opacity: 0; }
+.reticle .ret-hit line { stroke: var(--gold-bright); stroke-width: 3.4; stroke-linecap: round; }
+.reticle .ret-headshot-ring { fill: none; stroke: #ef5b4d; stroke-width: 2.8; opacity: 0; }
+.reticle.headshot .ret-hit line { stroke: #ef5b4d; stroke-width: 4.4; }
+.reticle.headshot .ret-headshot-ring { opacity: 1; animation: ret-headshot-pop 220ms var(--ease-out); }
+.reticle .ret-kill line { stroke: #ff8a76; stroke-width: 4.2; stroke-linecap: round; }
+.reticle .ret-kill path { fill: none; stroke: #ff8a76; stroke-width: 2.8; }
+.reticle.hit .ret-hit { opacity: 1; animation: ret-pop 130ms var(--ease-out); }
+.reticle.kill .ret-hit { opacity: 0; }
+/* Kill payoff (Phase 8e-1): the diamond pops hard — scale + brightness pulse
+   in the first ~200 ms, then holds for the rest of the marker window. */
+.reticle.kill .ret-kill {
+  opacity: 1;
+  animation: ret-kill-pop 220ms var(--ease-out);
+  transform-origin: center;
+  transform-box: fill-box;
+}
+@keyframes ret-pop { 0% { transform: scale(1.35); opacity: 0; } 30% { opacity: 1; } 100% { transform: scale(1); opacity: 1; } }
+@keyframes ret-headshot-pop { 0% { transform: scale(0.55); opacity: 0; } 35% { opacity: 1; } 100% { transform: scale(1); opacity: 1; } }
+@keyframes ret-kill-pop {
+  0% { transform: scale(1.8); opacity: 0; filter: brightness(2.4); }
+  35% { opacity: 1; filter: brightness(1.9); }
+  100% { transform: scale(1); filter: brightness(1); }
+}
+
+.damage-indicator {
+  position: fixed;
+  left: 50%;
+  top: 18%;
+  margin-left: -10px;
+  color: var(--err);
+  font-size: 30px;
+  text-shadow: 0 2px 5px #000;
+  pointer-events: none;
+  animation: damage-fade 0.5s ease-out forwards;
+}
+@keyframes damage-fade { 0% { opacity: 0; } 25% { opacity: 1; } 100% { opacity: 0; } }
+
+/* ---------- HUD layout regions ---------- */
+
+.signed-in-pill {
+  position: fixed;
+  left: max(14px, env(safe-area-inset-left));
+  top: max(14px, env(safe-area-inset-top));
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 11px;
+  border: 1px solid rgba(157, 208, 165, 0.45);
+  border-radius: 999px;
+  color: var(--ok);
+  background: rgba(26, 18, 10, 0.8);
+  font: 600 11px var(--font-hud);
+  letter-spacing: 0.03em;
+  pointer-events: none;
+  z-index: var(--z-hud);
+  /* Phase 8e-25 (D5): a long email must truncate, not collide with the
+     centered war score. */
+  max-width: min(280px, calc(100vw - 200px));
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.signed-in-pill svg { flex: 0 0 auto; }
+
+.pointer-hint {
+  position: fixed;
+  left: 50%;
+  bottom: 12px;
+  margin: 0;
+  padding: 5px 11px;
+  border-radius: var(--r-chip);
+  color: rgba(239, 230, 210, 0.6);
+  background: rgba(0, 0, 0, 0.32);
+  font: 500 11px var(--font-hud);
+  letter-spacing: 0.02em;
+  transform: translateX(-50%);
+  pointer-events: none;
+  z-index: var(--z-hud);
+  /* Phase 8e-25 (D6): wrap instead of clipping at narrow widths. */
+  max-width: calc(100vw - 24px);
+  text-align: center;
+}
+.pointer-unlocked-hint {
+  position: fixed;
+  left: 50%;
+  bottom: 88px;
+  margin: 0;
+  padding: 3px 10px;
+  border: 1px solid var(--chrome-line);
+  border-radius: var(--r-chip);
+  color: var(--ink-dim);
+  background: rgba(22, 15, 8, 0.5);
+  font: 500 10px var(--font-hud);
+  letter-spacing: 0.03em;
+  transform: translateX(-50%);
+  pointer-events: none;
+  z-index: var(--z-hud);
+}
+
+/* war score — top center */
+.war-score {
+  position: fixed;
+  left: 50%;
+  top: max(14px, env(safe-area-inset-top));
+  transform: translateX(-50%);
+  display: grid;
+  grid-template-columns: auto minmax(180px, 260px) auto;
+  align-items: center;
+  gap: 14px;
+  padding: 8px 16px;
+  width: min(520px, calc(100vw - 32px));
+  z-index: var(--z-hud);
+  pointer-events: none;
+}
+.war-score .tickets { display: grid; gap: 0; text-align: center; }
+.war-score .tickets b { font: 700 17px var(--font-hud); font-variant-numeric: tabular-nums; line-height: 1.1; }
+.war-score .tickets small { font: 600 9px var(--font-hud); letter-spacing: 0.16em; color: var(--ink-faint); }
+.war-score .tickets.ot b { color: var(--team-ot); }
+.war-score .tickets.bz b { color: var(--team-bz); }
+.war-score .gate { display: grid; gap: 3px; text-align: center; }
+.war-score .gate small { font: 600 9px var(--font-hud); letter-spacing: 0.18em; color: var(--ink-dim); }
+.war-score .capture {
+  position: relative;
+  height: 8px;
+  overflow: hidden;
+  border: 1px solid var(--chrome-line-strong);
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.5);
+}
+.war-score .capture span {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, var(--gold), var(--gold-bright));
+  transition: width var(--dur-fast) linear, margin-left var(--dur-fast) linear;
+}
+.war-score.owner-ot { border-color: rgba(224, 105, 92, 0.4); }
+.war-score.owner-ot .gate small { color: var(--team-ot); }
+.war-score.owner-bz { border-color: rgba(154, 123, 216, 0.4); }
+.war-score.owner-bz .gate small { color: var(--team-bz); }
+/* siege objective line under the state label (siege loop §2.3) — gold so it
+   reads as direction, not status, and stays team-neutral under owner tinting */
+.war-score .gate small.objective { color: var(--gold-bright); letter-spacing: 0.14em; }
+
+/* contextual interact prompt (siege loop): push/man/deploy a bombard, repair */
+.interact-hint {
+  position: fixed;
+  left: 50%;
+  bottom: 30%;
+  margin: 0;
+  padding: 5px 12px;
+  border: 1px solid var(--chrome-line);
+  border-radius: var(--r-chip);
+  color: var(--gold-bright);
+  background: rgba(22, 15, 8, 0.6);
+  font: 600 12px var(--font-hud);
+  letter-spacing: 0.14em;
+  transform: translateX(-50%);
+  pointer-events: none;
+  z-index: var(--z-hud);
+}
+
+/* vitals — bottom left */
+.vitals {
+  position: fixed;
+  left: max(18px, env(safe-area-inset-left));
+  bottom: max(18px, env(safe-area-inset-bottom));
+  display: grid;
+  gap: 8px;
+  min-width: 216px;
+  padding: 12px 14px;
+  z-index: var(--z-hud);
+  pointer-events: none;
+}
+.vitals .hp-row { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.vitals .hp-num { font: 700 26px var(--font-hud); font-variant-numeric: tabular-nums; line-height: 1; }
+.vitals .hp-num.low { color: var(--err); }
+.vitals .hp-row small, .vitals .ammo-row small { font: 600 9px var(--font-hud); letter-spacing: 0.16em; color: var(--ink-faint); }
+.vitals .hp-bar { height: 5px; overflow: hidden; border-radius: 3px; background: rgba(255, 255, 255, 0.1); }
+.vitals .hp-bar span { display: block; height: 100%; border-radius: 3px; background: linear-gradient(90deg, #b9c49a, #e8e3c8); transition: width var(--dur-med) var(--ease-out); }
+.vitals .hp-bar.low span { background: linear-gradient(90deg, var(--team-ot-deep), var(--err)); }
+.vitals .ammo-row { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; border-top: 1px solid var(--chrome-line); padding-top: 8px; }
+.vitals .ammo-num { font: 600 15px var(--font-hud); font-variant-numeric: tabular-nums; color: var(--gold-bright); }
+.vitals .ammo-num.reloading { color: var(--ink-dim); animation: reload-breathe 0.9s ease-in-out infinite; }
+@keyframes reload-breathe { 0%, 100% { opacity: 0.55; } 50% { opacity: 1; } }
+.vitals .pulse { animation: vitals-pulse 260ms var(--ease-out); }
+@keyframes vitals-pulse {
+  0% { transform: scale(1.14); filter: brightness(1.5); }
+  100% { transform: scale(1); filter: brightness(1); }
+}
+
+/* right column — minimap over kill feed */
+.hud-right {
+  position: fixed;
+  right: max(18px, env(safe-area-inset-right));
+  top: max(14px, env(safe-area-inset-top));
+  display: grid;
+  gap: 10px;
+  justify-items: end;
+  z-index: var(--z-feed);
+  pointer-events: none;
+}
+.minimap { width: max-content; max-width: calc(100vw - 24px); padding: 8px; display: grid; gap: 5px; }
+.minimap canvas { display: block; width: var(--minimap-size); height: var(--minimap-size); border: 1px solid rgba(232, 220, 192, 0.28); border-radius: var(--r-chip); box-shadow: inset 0 0 0 1px rgba(17, 11, 6, 0.65); }
+.minimap-hud canvas { width: min(var(--minimap-size), var(--minimap-hud-max, 224px)); height: min(var(--minimap-size), var(--minimap-hud-max, 224px)); }
+.minimap-head { min-width: 0; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.minimap-head > b { overflow: hidden; color: var(--ink); font: 700 10px var(--font-display-ot); letter-spacing: 0.07em; text-overflow: ellipsis; white-space: nowrap; }
+.minimap-toggle {
+  flex: 0 0 auto; color: var(--ink-faint); font: 700 10px var(--font-hud); letter-spacing: 0.1em; }
+.minimap-toggle kbd { margin-right: 4px; padding: 2px 4px; border: 1px solid var(--chrome-line-strong); border-bottom-width: 2px; border-radius: 3px; color: var(--gold-bright); font: 700 8px var(--font-hud); }
+.minimap .minimap-legend { display: flex; justify-content: space-between; font: 600 8px var(--font-hud); letter-spacing: 0.14em; color: var(--ink-faint); }
+.minimap-key {
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px; color: var(--ink-dim); font: 700 9px var(--font-hud); letter-spacing: 0.06em; }
+.minimap-key span { display: inline-flex; align-items: center; gap: 4px; min-width: 0; }
+.map-key-symbol { display: inline-block; flex: 0 0 auto; width: 7px; height: 7px; border: 1px solid currentColor; }
+.map-key-symbol.ally { border-radius: 50%; color: var(--team-bz); background: var(--team-bz); }
+.map-key-symbol.enemy { transform: rotate(45deg); color: var(--team-ot); background: var(--team-ot); }
+.map-key-symbol.ship { width: 10px; height: 5px; border-radius: 1px; color: var(--gold-bright); background: var(--gold-bright); }
+.map-key-symbol.gun { width: 10px; height: 3px; border-radius: 1px; color: var(--ink-dim); background: var(--ink-dim); transform: rotate(-25deg); }
+
+/* map-control gauge — Ottoman left, neutral desaturated middle, Byzantine right */
+.map-gauge { position: relative; }
+.map-gauge-bar {
+  display: flex;
+  height: 9px;
+  overflow: hidden;
+  border: 1px solid var(--chrome-line);
+  border-radius: 5px;
+  background: rgba(0, 0, 0, 0.4);
+}
+.map-gauge-bar span { transition: flex-grow var(--dur-med) var(--ease-out); }
+.map-gauge-bar .ot { background: var(--team-ot); opacity: 0.85; }
+.map-gauge-bar .bz { background: var(--team-bz); opacity: 0.85; }
+.map-gauge-bar .none { background: rgba(139, 135, 125, 0.4); }
+.map-gauge-count {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font: 700 8px var(--font-hud);
+  letter-spacing: 0.1em;
+  color: var(--ink);
+  text-shadow: 0 1px 2px #000;
+  pointer-events: none;
+}
+
+/* loadout — bottom right slot strip */
+.loadout {
+  position: fixed;
+  right: max(18px, env(safe-area-inset-right));
+  bottom: max(18px, env(safe-area-inset-bottom));
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 5px;
+  max-width: calc(100vw - 24px);
+  padding: 8px 10px;
+  z-index: var(--z-hud);
+  pointer-events: none;
+}
+.loadout .slot {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--chrome-line);
+  border-radius: var(--r-chip);
+  color: var(--ink-dim);
+  background: rgba(255, 255, 255, 0.03);
+}
+.loadout .slot svg { width: 23px; height: 23px; shape-rendering: geometricPrecision; }
+.loadout .slot.equipped { color: var(--gold-bright); border-color: var(--chrome-line-strong); background: rgba(217, 184, 109, 0.1); }
+.loadout .slot.active { color: var(--gold-bright); border-color: rgba(244, 213, 141, 0.5); box-shadow: inset 0 0 9px rgba(244, 213, 141, 0.28); }
+/* Draw/holster in flight: the incoming slot pulses until the server timer lands. */
+.loadout .slot.drawing { animation: slot-draw 300ms ease-in-out infinite alternate; }
+@keyframes slot-draw {
+  from { color: var(--ink-faint); border-color: var(--chrome-line); }
+  to { color: var(--gold-bright); border-color: rgba(244, 213, 141, 0.45); }
+}
+/* Ranged-slot pan state pip (Phase 8e-3): lit = loaded, hollow = empty. */
+.loadout .slot .pip {
+  position: absolute;
+  left: 3px;
+  bottom: 3px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+}
+.loadout .slot .pip.pip-loaded { background: var(--gold-bright); box-shadow: 0 0 4px rgba(244, 213, 141, 0.6); }
+.loadout .slot .pip.pip-empty { background: transparent; border: 1px solid var(--ink-faint); }
+.loadout .slot kbd {
+  position: absolute;
+  right: 2px;
+  bottom: 1px;
+  font: 700 9px var(--font-hud);
+  color: var(--ink-faint);
+}
+
+/* kill feed */
+.kill-feed { display: grid; gap: 5px; justify-items: end; width: min(620px, calc(100vw - 24px)); max-width: 100%; }
+.kill-line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  max-width: 100%;
+  min-width: 0;
+  gap: 7px;
+  margin: 0;
+  padding: 5px 10px;
+  border: 1px solid var(--chrome-line);
+  border-radius: var(--r-chip);
+  background: linear-gradient(170deg, rgba(40, 30, 17, 0.88), rgba(18, 13, 7, 0.9));
+  box-shadow: inset 0 1px 0 var(--chrome-hi);
+  font-size: 12.5px;
+  font-weight: 500;
+  animation: kill-in 4.2s var(--ease-out) forwards;
+}
+.kill-line.own { border-color: rgba(239, 91, 77, 0.8); box-shadow: inset 0 1px 0 rgba(255, 173, 143, 0.45), 0 0 14px rgba(184, 49, 38, 0.2); }
+.kill-line.own .kf-icon { color: #ef5b4d; }
+.kill-line .kf-icon { flex: 0 0 auto; display: grid; place-items: center; width: 15px; height: 15px; color: var(--ink-dim); }
+.kill-line .kf-name { font-weight: 700; }
+.kill-line .kf-name, .kill-line .kf-class { min-width: 0; max-width: 22ch; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.kill-line .kf-name.ot { color: var(--team-ot); }
+.kill-line .kf-name.bz { color: var(--team-bz); }
+.kill-line .kf-class { color: var(--ink-faint); font-size: 11px; }
+.kill-line .kf-verb { color: var(--ink-faint); font-size: 11px; }
+.kill-line .kf-world { color: var(--gold-bright); font: 600 11.5px var(--font-hud); letter-spacing: 0.04em; }
+/* Blocked-player involvement (Phase 8c-7): the row still shows — a kill
+   happened — but reads dimmed so the blocked player stops being the focus. */
+.kill-line.blocked { opacity: 0.45; filter: saturate(0.35); }
+.kill-line.blocked .kf-name { color: var(--ink-faint) !important; }
+.kill-line .kf-hs {
+  font-size: 10px;
+  padding: 0 5px;
+  border: 1px solid rgba(244, 213, 141, 0.55);
+  border-radius: 3px;
+  color: var(--gold-bright);
+  font: 700 8.5px var(--font-hud);
+  letter-spacing: 0.1em;
+}
+@keyframes kill-in {
+  0% { opacity: 0; transform: translateX(16px) scale(0.98); }
+  5% { opacity: 1; transform: none; }
+  82% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* xp strip — bottom center */
+.xp-hud {
+  position: fixed;
+  left: 50%;
+  bottom: 40px;
+  width: min(320px, 50vw);
+  transform: translateX(-50%);
+  text-align: center;
+  pointer-events: none;
+  z-index: var(--z-hud);
+}
+.xp-bar { height: 5px; overflow: hidden; border: 1px solid var(--chrome-line-strong); border-radius: 3px; background: rgba(0, 0, 0, 0.45); }
+.xp-bar span { display: block; height: 100%; background: linear-gradient(90deg, #c99b4a, var(--gold-bright)); transition: width 0.2s var(--ease-out); }
+.xp-label { display: flex; justify-content: space-between; margin-top: 4px; color: rgba(239, 230, 210, 0.85); font: 600 11px var(--font-hud); text-shadow: 0 1px 4px #000; }
+.xp-label .xp-rank { color: var(--gold-bright); }
+
+.floaty-layer {
+  position: fixed;
+  left: 50%;
+  bottom: 86px;
+  width: 320px;
+  transform: translateX(-50%);
+  text-align: center;
+  pointer-events: none;
+  z-index: var(--z-hud);
+}
+.xp-floaty {
+  display: inline-block;
+  margin: 2px 4px;
+  color: #ffe9ad;
+  font: 700 15px var(--font-hud);
+  font-variant-numeric: tabular-nums;
+  text-shadow: 0 1px 5px #000, 0 0 12px rgba(244, 213, 141, 0.5);
+  animation: floaty 1.6s var(--ease-out) forwards;
+}
+@keyframes floaty { 0% { opacity: 0; transform: translateY(8px); } 15% { opacity: 1; } 100% { opacity: 0; transform: translateY(-26px); } }
+
+/* own-kill payoff notification */
+.own-kill {
+  position: fixed;
+  left: 50%;
+  bottom: 128px;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 7px 16px;
+  border: 1px solid var(--chrome-line-strong);
+  border-radius: 999px;
+  background: linear-gradient(170deg, rgba(44, 33, 19, 0.92), rgba(20, 14, 8, 0.94));
+  box-shadow: inset 0 1px 0 var(--chrome-hi), 0 8px 26px rgba(0, 0, 0, 0.5);
+  pointer-events: none;
+  z-index: var(--z-hud);
+  animation: ownkill 2.7s var(--ease-out) forwards;
+}
+.own-kill .ok-text { font-size: 14.5px; font-weight: 700; letter-spacing: 0.01em; }
+.own-kill .ok-xp { color: var(--gold-bright); font: 700 13.5px var(--font-hud); font-variant-numeric: tabular-nums; }
+.own-kill .ok-hs {
+  padding: 1px 7px;
+  border: 1px solid rgba(244, 213, 141, 0.7);
+  border-radius: 4px;
+  color: #1a201a;
+  background: linear-gradient(180deg, var(--gold-bright), var(--gold));
+  font: 800 9.5px var(--font-hud);
+  letter-spacing: 0.12em;
+}
+.own-kill.headshot { border-color: rgba(244, 213, 141, 0.65); box-shadow: inset 0 1px 0 var(--chrome-hi), 0 0 22px rgba(244, 213, 141, 0.28), 0 8px 26px rgba(0, 0, 0, 0.5); }
+@keyframes ownkill {
+  0% { opacity: 0; transform: translateX(-50%) translateY(10px) scale(1.08); }
+  7% { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+  78% { opacity: 1; }
+  100% { opacity: 0; transform: translateX(-50%) translateY(-6px); }
+}
+
+/* ping + aura pips — bottom right */
+.hud-pips { position: fixed; right: max(18px, env(safe-area-inset-right)); bottom: max(112px, calc(108px + env(safe-area-inset-bottom))); display: grid; gap: 6px; justify-items: end; max-width: calc(100vw - 24px); z-index: var(--z-hud); pointer-events: none; }
+.pip {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 4px 11px;
+  border: 1px solid var(--chrome-line);
+  border-radius: 999px;
+  background: rgba(26, 18, 10, 0.75);
+  font: 600 10.5px var(--font-hud);
+  letter-spacing: 0.05em;
+  color: var(--ink-dim);
+}
+.pip i { width: 6px; height: 6px; border-radius: 50%; background: var(--ok); }
+.pip.warn i { background: var(--gold-bright); }
+.pip.bad i { background: var(--err); }
+.pip.aura { color: #ffe9ad; border-color: rgba(217, 184, 109, 0.55); animation: aura-pulse 1.6s ease-in-out infinite; }
+@keyframes aura-pulse { 0%, 100% { box-shadow: 0 0 4px rgba(217, 184, 109, 0.25); } 50% { box-shadow: 0 0 12px rgba(217, 184, 109, 0.6); } }
+
+/* ---------- toasts ---------- */
+
+.toast-layer {
+  position: fixed;
+  left: 50%;
+  bottom: 176px;
+  width: min(430px, 80vw);
+  transform: translateX(-50%);
+  display: grid;
+  gap: 6px;
+  pointer-events: none;
+  z-index: var(--z-toast);
+}
+.toast {
+  position: relative;
+  margin: 0;
+  padding: 9px 14px 9px 18px;
+  border: 1px solid var(--chrome-line-strong);
+  border-radius: var(--r-chip);
+  background: var(--chrome-bg);
+  box-shadow: inset 0 1px 0 var(--chrome-hi), 0 6px 22px rgba(0, 0, 0, 0.4);
+  text-align: center;
+  font-size: 13.5px;
+  font-weight: 600;
+  overflow: hidden;
+  animation: toast-in 3.4s var(--ease-out) forwards;
+}
+.toast::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--gold);
+}
+.toast small { display: block; margin-top: 2px; color: var(--gold-bright); font: 500 11px var(--font-hud); }
+.toast.ui { animation: toast-in 9s var(--ease-out) forwards; }
+/* Phase 8e-25 (D13): long notices ellipsize on one line instead of being
+   hard-clipped by the toast's overflow: hidden. */
+.toast b, .toast small { display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.toast.ui.success::before { background: var(--ok); }
+.toast.ui.success, .toast.ui.success b { border-color: rgba(157, 208, 165, 0.5); }
+.toast.ui.success small { color: var(--ok); }
+.toast.ui.error::before { background: var(--err); }
+.toast.ui.error { border-color: rgba(240, 111, 98, 0.55); }
+.toast.ui.error b { color: #f0a99f; }
+.toast.ui.error small { color: #f0a99f; }
+@keyframes toast-in { 0% { opacity: 0; transform: translateY(10px); } 6% { opacity: 1; transform: none; } 85% { opacity: 1; } 100% { opacity: 0; } }
+
+/* ---------- promotion fanfare ---------- */
+
+.fanfare { position: fixed; inset: 0; display: grid; place-content: center; text-align: center; pointer-events: none; z-index: var(--z-ceremony); }
+.fanfare-vignette { position: absolute; inset: 0; background: radial-gradient(ellipse at center, rgba(244, 213, 141, 0.24) 0%, rgba(8, 10, 8, 0.62) 62%, rgba(5, 6, 5, 0.92) 100%); animation: fanfare-flash 3.2s ease-out forwards; }
+.fanfare-insignia { position: relative; color: var(--team-gold); font-size: 42px; letter-spacing: 0.2em; text-shadow: 0 0 30px rgba(255, 209, 102, 0.8); animation: fanfare-pop 3.2s var(--ease-out) forwards; }
+.fanfare h2 { position: relative; margin: 10px 0 0; font-size: 42px; font-weight: 600; color: #fff; text-shadow: 0 3px 14px #000; animation: fanfare-pop 3.2s var(--ease-out) forwards; }
+.fanfare p { position: relative; margin: 8px 0 0; color: #ffe9ad; font: 600 13px var(--font-hud); letter-spacing: 0.2em; text-transform: uppercase; animation: fanfare-pop 3.2s var(--ease-out) forwards; }
+@keyframes fanfare-flash { 0% { opacity: 1; } 60% { opacity: 1; } 100% { opacity: 0; visibility: hidden; } }
+@keyframes fanfare-pop { 0% { transform: scale(1.25); opacity: 0; } 18% { transform: scale(1); opacity: 1; } 60% { opacity: 1; } 100% { opacity: 0; } }
+
+/* ---------- medal ceremony ----------
+   A beat of pause (vignette only), then the medallion itself reveals with
+   the sting, then name + citation. Tier escalates size, glow, and rays. */
+
+.medal-ceremony { position: fixed; inset: 0; display: grid; place-content: center; justify-items: center; text-align: center; pointer-events: none; z-index: var(--z-ceremony); animation: ceremony-out 4.8s ease-out forwards; }
+.medal-ceremony .mc-vignette { position: absolute; inset: 0; background: radial-gradient(ellipse at center, rgba(10, 11, 9, 0.18) 0%, rgba(8, 10, 8, 0.66) 68%, rgba(5, 6, 5, 0.9) 100%); animation: mc-dim 4.8s ease-out forwards; }
+.mc-medal { position: relative; opacity: 0; animation: mc-reveal 4.8s var(--ease-out) forwards; }
+.mc-name { position: relative; margin: 14px 0 0; font-size: 34px; color: #fff; text-shadow: 0 3px 14px #000; opacity: 0; animation: mc-text 4.8s var(--ease-out) forwards; }
+.mc-sub { position: relative; margin: 7px 0 0; color: #ffe9ad; font: 600 12px var(--font-hud); letter-spacing: 0.18em; text-transform: uppercase; opacity: 0; animation: mc-text2 4.8s var(--ease-out) forwards; }
+.medal-ceremony.tier-2 .mc-medal { filter: drop-shadow(0 0 18px rgba(201, 206, 212, 0.45)); }
+.medal-ceremony.tier-3 .mc-medal { filter: drop-shadow(0 0 26px rgba(244, 213, 141, 0.6)); }
+.mc-rays { position: absolute; left: 50%; top: 50%; width: 260px; height: 260px; opacity: 0; animation: mc-rays 4.8s ease-out forwards; }
+@keyframes mc-dim { 0% { opacity: 0; } 7% { opacity: 1; } 82% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes mc-reveal {
+  0%, 7% { opacity: 0; transform: scale(1.35) translateY(10px); }
+  16% { opacity: 1; transform: scale(1) translateY(0); }
+  84% { opacity: 1; }
+  100% { opacity: 0; }
+}
+@keyframes mc-text { 0%, 13% { opacity: 0; transform: translateY(8px); } 21% { opacity: 1; transform: none; } 84% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes mc-text2 { 0%, 17% { opacity: 0; transform: translateY(6px); } 25% { opacity: 1; transform: none; } 84% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes mc-rays { 0%, 10% { opacity: 0; transform: translate(-50%, -50%) rotate(-8deg) scale(0.9); } 22% { opacity: 0.85; transform: translate(-50%, -50%) rotate(0deg) scale(1); } 84% { opacity: 0.7; transform: translate(-50%, -50%) rotate(2deg) scale(1.02); } 100% { opacity: 0; transform: translate(-50%, -50%) rotate(3deg) scale(1.03); } }
+@keyframes ceremony-out { 0%, 100% { visibility: visible; } }
+
+/* ---------- ESC menu ---------- */
+
+/* Full ornate frame (Phase 8e-14): the measured slice keeps the medallions
+   in the corners; `fill` draws the frame's own dark center parchment as the
+   panel interior, so the light ink stack stays legible without recoloring. */
+.menu-panel {
+  position: fixed;
+  inset: 5% 8%;
+  padding: 24px 28px;
+  overflow: auto;
+  border: 42px solid transparent;
+  border-radius: 0;
+  border-image: url("/ui/frame-ornate.webp") 320 300 320 300 fill / 42px 40px stretch;
+  background: none;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.55);
+  z-index: var(--z-menu);
+}
+.menu-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; margin-bottom: 18px; }
+.menu-head h2 { margin: 0; font-size: 22px; font-weight: 800; letter-spacing: 0.01em; }
+.menu-tabs { display: flex; flex-wrap: wrap; gap: 4px; padding: 3px; border: 1px solid var(--chrome-line); border-radius: 8px; background: rgba(12, 8, 4, 0.5); }
+.menu-tabs button {
+  padding: 7px 14px;
+  border: 1px solid transparent;
+  border-radius: var(--r-chip);
+  color: var(--ink-dim);
+  background: transparent;
+  font-weight: 700;
+  font-size: 13px;
+  transition: color var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out);
+}
+.menu-tabs button:hover { color: var(--ink); }
+.menu-tabs button.active { color: #1a201a; background: linear-gradient(180deg, var(--gold-bright), var(--gold)); }
+.menu-panel h3 { margin: 22px 0 9px; }
+.menu-panel section:first-child h3 { margin-top: 6px; }
+.tab-content { display: grid; gap: 4px; }
+
+/* profile */
+.profile-hero { display: flex; align-items: center; gap: 18px; padding: 16px 18px; }
+.profile-hero .ph-title { font-size: 30px; line-height: 1.1; }
+.profile-hero .ph-title.ot { color: var(--team-ot); }
+.profile-hero .ph-title.bz { color: var(--team-bz); }
+.profile-hero .ph-prestige { color: var(--team-gold); font-size: 15px; letter-spacing: 0.14em; }
+.profile-hero .ph-sub { margin-top: 3px; color: var(--ink-dim); font: 500 12px var(--font-hud); }
+.profile-hero .ph-xp { flex: 1; min-width: 140px; }
+.stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(96px, 1fr)); gap: 8px; }
+.stat-cell { padding: 10px 12px; border: 1px solid var(--chrome-line); border-radius: var(--r-chip); background: rgba(255, 255, 255, 0.03); text-align: center; }
+.stat-cell b { display: block; font: 700 20px var(--font-hud); font-variant-numeric: tabular-nums; }
+.stat-cell small { color: var(--ink-faint); font: 600 9px var(--font-hud); letter-spacing: 0.14em; text-transform: uppercase; }
+.careers { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 8px; }
+.career { padding: 12px 14px; border: 1px solid var(--chrome-line); border-radius: var(--r-chip); background: rgba(255, 255, 255, 0.03); display: grid; gap: 6px; }
+.career .career-faction { font: 600 9.5px var(--font-hud); letter-spacing: 0.16em; text-transform: uppercase; }
+.career.ot .career-faction { color: var(--team-ot); }
+.career.bz .career-faction { color: var(--team-bz); }
+.career.ot { border-color: rgba(224, 105, 92, 0.3); }
+.career.bz { border-color: rgba(154, 123, 216, 0.3); }
+.career .career-title { font-size: 19px; }
+.career .career-title .prestige { color: var(--team-gold); font-size: 13px; letter-spacing: 0.12em; }
+.career .career-xp { color: var(--ink-dim); font: 500 11.5px var(--font-hud); }
+.career .xp-bar { height: 4px; }
+
+.contract { margin-bottom: 10px; }
+.contract-head { display: flex; justify-content: space-between; font-size: 13px; font-weight: 600; }
+.contract-head b { color: var(--gold-bright); font-family: var(--font-hud); font-variant-numeric: tabular-nums; }
+.contract-bar { height: 5px; margin-top: 5px; overflow: hidden; border-radius: 3px; background: rgba(255, 255, 255, 0.1); }
+.contract-bar span { display: block; height: 100%; background: var(--gold); }
+.contract.done .contract-head { color: var(--ok); }
+.contract.done .contract-bar span { background: #6fae7a; }
+.lifetime-line, .medal-line { margin: 4px 0; color: var(--ink-dim); font-size: 13px; line-height: 1.55; }
+.tally-line { margin: 18px 0 0; color: var(--ink-faint); font: 500 12px var(--font-hud); }
+.profile-actions { display: flex; gap: 10px; margin-top: 16px; }
+.profile-actions button {
+  padding: 9px 14px;
+  border: 1px solid var(--chrome-line-strong);
+  border-radius: var(--r-chip);
+  color: var(--gold-bright);
+  background: rgba(217, 184, 109, 0.1);
+  font-weight: 700;
+  transition: background var(--dur-fast) var(--ease-out);
+}
+.profile-actions button:hover { background: rgba(217, 184, 109, 0.2); }
+
+/* medal chest */
+.medal-chest { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 8px; }
+.medal-card { display: flex; align-items: center; gap: 12px; padding: 9px 11px; border: 1px solid var(--chrome-line); border-radius: var(--r-chip); background: rgba(255, 255, 255, 0.03); }
+.medal-card.tier-2 { border-color: rgba(201, 206, 212, 0.4); }
+.medal-card.tier-3 { border-color: rgba(244, 213, 141, 0.55); }
+.medal-card-info { min-width: 0; flex: 1; display: grid; gap: 3px; }
+.medal-card-info b { color: var(--ink); font-size: 13px; }
+.medal-card-info > small { color: var(--gold); font: 600 9.5px var(--font-hud); letter-spacing: 0.1em; text-transform: uppercase; }
+.medal-card.locked .medal-card-info > small { color: var(--ink-faint); }
+.medal-progress { display: flex; align-items: center; gap: 8px; }
+.medal-progress-bar { height: 4px; flex: 1; overflow: hidden; border-radius: 2px; background: rgba(255, 255, 255, 0.1); }
+.medal-progress-bar span { display: block; height: 100%; background: linear-gradient(90deg, #c99b4a, var(--gold-bright)); }
+.medal-card.locked .medal-progress-bar span { background: #5a6158; }
+.medal-progress small { color: var(--ink-faint); font: 500 10.5px var(--font-hud); font-variant-numeric: tabular-nums; }
+
+/* settings */
+.settings-row { display: grid; gap: 7px; margin-bottom: 13px; color: var(--ink-dim); font-size: 13px; font-weight: 600; }
+.settings-row span { display: flex; justify-content: space-between; }
+.settings-row span b { color: var(--gold-bright); font-family: var(--font-hud); font-variant-numeric: tabular-nums; }
+.settings-row input[type="range"] { width: 100%; accent-color: var(--gold); }
+.settings-check { display: flex; align-items: center; gap: 9px; margin: 8px 0; color: var(--ink-dim); font-size: 13px; font-weight: 600; }
+.settings-check input { accent-color: var(--gold); }
+.settings-hint { color: var(--ink-faint); }
+.settings-segment { display: flex; gap: 4px; padding: 3px; border: 1px solid var(--chrome-line); border-radius: 8px; background: rgba(12, 8, 4, 0.5); width: max-content; }
+.settings-segment button { padding: 6px 16px; border: 1px solid transparent; border-radius: var(--r-chip); color: var(--ink-dim); background: transparent; font-weight: 700; font-size: 12.5px; text-transform: capitalize; }
+.settings-segment button.active { color: #1a201a; background: linear-gradient(180deg, var(--gold-bright), var(--gold)); }
+
+/* keybinds */
+.keybinds { border-collapse: collapse; width: 100%; font-size: 13px; }
+.keybinds td { padding: 6px 9px; border-bottom: 1px solid var(--chrome-line); color: var(--ink-dim); font-weight: 500; }
+.keybinds td:first-child { width: 190px; }
+.keybinds kbd {
+  display: inline-block;
+  padding: 3px 8px;
+  border: 1px solid var(--chrome-line-strong);
+  border-bottom-width: 2px;
+  border-radius: 5px;
+  color: var(--gold-bright);
+  background: rgba(16, 11, 6, 0.65);
+  font: 600 11px var(--font-hud);
+}
+
+/* cosmetics */
+.cosmetic-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 9px; }
+.cosmetic-slot {
+  padding: 14px 12px;
+  border: 1px dashed var(--chrome-line);
+  border-radius: var(--r-chip);
+  text-align: center;
+  display: grid;
+  gap: 6px;
+  justify-items: center;
+  opacity: 0.78;
+}
+.cosmetic-slot .skin-art { width: 54px; height: 54px; display: grid; place-items: center; border: 1px solid var(--chrome-line); border-radius: 50%; background: radial-gradient(circle at 35% 30%, rgba(232, 220, 192, 0.1), rgba(16, 11, 6, 0.5)); color: var(--ink-faint); font: 600 20px var(--font-hud); }
+.cosmetic-slot b { display: block; color: var(--ink-dim); font-size: 13px; }
+.cosmetic-slot small { color: var(--ink-faint); font-size: 11px; }
+.cosmetic-slot .skin-unlock { color: var(--ink-faint); font-style: italic; }
+.cosmetic-slot .skin-locked { color: var(--ink-faint); font: 700 10px var(--font-hud); letter-spacing: 0.1em; }
+.cosmetic-slot .skin-equipped { color: var(--ok); font: 700 10px var(--font-hud); letter-spacing: 0.1em; }
+.cosmetic-slot.available { border-style: solid; border-color: rgba(217, 184, 109, 0.45); opacity: 1; }
+.cosmetic-slot.available b { color: var(--ink); }
+.cosmetic-slot.available .skin-art { color: var(--gold-bright); border-color: rgba(217, 184, 109, 0.4); }
+.cosmetic-slot.equipped { border-color: rgba(157, 208, 165, 0.7); background: rgba(157, 208, 165, 0.07); }
+.cosmetic-slot button { padding: 6px 14px; border: 1px solid var(--chrome-line-strong); border-radius: var(--r-chip); color: var(--gold-bright); background: rgba(217, 184, 109, 0.1); font-weight: 700; }
+.cosmetic-slot button:hover { background: rgba(217, 184, 109, 0.2); }
+.cosmetic-slot button:disabled { opacity: 0.5; cursor: wait; }
+
+/* clan */
+.clan-note { color: var(--ink-faint); font-size: 12.5px; line-height: 1.5; }
+
+/* Phase 8c-7 social tab */
+.social-tab { display: grid; gap: 8px; }
+.social-form { display: flex; gap: 6px; margin: 4px 0; }
+.social-form input { flex: 1; }
+.social-rows { display: grid; gap: 4px; }
+.social-row { display: flex; align-items: center; gap: 8px; padding: 4px 6px; border-radius: var(--r-chip); background: rgba(255, 255, 255, 0.03); }
+.social-row b { min-width: 140px; }
+.social-row small { flex: 1; color: var(--ink-faint); }
+.social-row.offline { opacity: 0.55; }
+.social-row.squad .social-row { border: 1px solid var(--team-squad-deep); }
+.social-row.squad b { color: var(--team-squad); }
+.social-row.self b { color: var(--gold-bright); }
+.social-actions { display: flex; gap: 6px; }
+button.danger { color: var(--err); }
+.clan-status { color: var(--gold-bright); font-size: 13px; font-weight: 600; }
+.clan-form { display: flex; gap: 7px; margin-top: 7px; }
+.clan-form input { min-width: 0; flex: 1; padding: 8px 10px; border: 1px solid var(--chrome-line-strong); border-radius: var(--r-chip); color: var(--ink); background: rgba(16, 11, 6, 0.6); outline: none; }
+.clan-form input:focus { border-color: var(--gold); }
+.clan-form button { padding: 8px 14px; border: 0; border-radius: var(--r-chip); color: #1a201a; background: linear-gradient(180deg, var(--gold-bright), var(--gold)); font-weight: 800; }
+.clan-invite, .clan-roster p { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 7px 10px; margin: 5px 0; border: 1px solid var(--chrome-line); border-radius: var(--r-chip); background: rgba(255, 255, 255, 0.03); font-size: 13px; }
+.clan-invite button, .clan-roster button { padding: 5px 10px; border: 1px solid var(--chrome-line-strong); border-radius: 4px; color: var(--gold-bright); background: rgba(217, 184, 109, 0.08); }
+.clan-roster p.self { background: rgba(217, 184, 109, 0.1); }
+.clan-roster p span { color: var(--ink); }
+.clan-stats { color: var(--ink-dim); font-size: 13px; }
+.clan-windows { display: flex; gap: 6px; margin: 8px 0; }
+.clan-windows button { padding: 5px 11px; border: 1px solid var(--chrome-line); border-radius: 4px; color: var(--ink-dim); background: transparent; text-transform: capitalize; }
+.clan-windows button.active { color: #1a201a; background: linear-gradient(180deg, var(--gold-bright), var(--gold)); border-color: transparent; }
+.clan-leaderboard { display: grid; gap: 4px; font: 500 13px var(--font-hud); }
+.clan-leaderboard p { display: flex; justify-content: space-between; margin: 0; padding: 5px 8px; border-radius: 4px; background: rgba(255, 255, 255, 0.04); }
+.clan-leaderboard p b { color: var(--gold-bright); font-variant-numeric: tabular-nums; }
+.clan-leaderboard small { color: var(--ink-faint); }
+.clan-search-results p { display: flex; justify-content: space-between; margin: 5px 0; padding: 5px 8px; border-radius: 4px; background: rgba(255, 255, 255, 0.04); font-size: 13px; }
+.clan-search-results small { color: var(--ink-faint); }
+.clan-leave { margin-top: 14px; padding: 9px 14px; border: 1px solid rgba(240, 131, 122, 0.5); border-radius: var(--r-chip); color: var(--err); background: rgba(122, 45, 38, 0.22); font-weight: 800; }
+
+/* ---------- scoreboard ---------- */
+
+/* Full ornate frame with the dark center-parchment fill (Phase 8e-14). */
+.scoreboard {
+  position: fixed;
+  inset: 6% 6%;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 14px;
+  padding: 22px 26px;
+  border: 40px solid transparent;
+  border-radius: 0;
+  border-image: url("/ui/frame-ornate.webp") 320 300 320 300 fill / 40px 38px stretch;
+  background: none;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.55);
+  overflow: hidden;
+  z-index: var(--z-menu);
+}
+.scoreboard-head { display: flex; align-items: baseline; justify-content: space-between; }
+.scoreboard-head h2 { margin: 0; font-size: 20px; font-weight: 800; }
+.scoreboard-head small { color: var(--ink-faint); font: 500 11px var(--font-hud); letter-spacing: 0.1em; }
+.scoreboard-teams { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; min-height: 0; }
+.sb-team { display: grid; grid-template-rows: auto auto 1fr; min-height: 0; border: 1px solid var(--chrome-line); border-radius: var(--r-panel); overflow: hidden; }
+.sb-team.ot { border-color: rgba(224, 105, 92, 0.35); }
+.sb-team.bz { border-color: rgba(154, 123, 216, 0.35); }
+.sb-team-head { padding: 9px 14px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 5px 12px; }
+.sb-team.ot .sb-team-head { background: var(--team-ot-soft); }
+.sb-team.bz .sb-team-head { background: var(--team-bz-soft); }
+.sb-team-head b { font-size: 17px; }
+.sb-team.ot .sb-team-head b { color: var(--team-ot); }
+.sb-team.bz .sb-team-head b { color: var(--team-bz); }
+.sb-team-head small { color: var(--ink-faint); font: 500 10.5px var(--font-hud); }
+.sb-cols, .sb-row { display: grid; grid-template-columns: minmax(0, 1fr) repeat(3, minmax(38px, 52px)) minmax(48px, 64px); gap: 6px; padding: 5px 14px; align-items: center; }
+.sb-cols { color: var(--ink-faint); font: 600 9px var(--font-hud); letter-spacing: 0.12em; text-transform: uppercase; border-bottom: 1px solid var(--chrome-line); }
+.sb-cols span:not(:first-child), .sb-row span:not(:first-child) { text-align: right; }
+.sb-rows { overflow-y: auto; min-height: 0; }
+.sb-row { font: 500 12.5px var(--font-hud); font-variant-numeric: tabular-nums; color: var(--ink-dim); border-bottom: 1px solid rgba(232, 220, 192, 0.05); }
+.sb-row .sb-name { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--ink); font-family: var(--font-body); font-weight: 600; font-size: 12.5px; }
+.sb-row .sb-name .sb-rank { color: var(--team-gold); margin-right: 5px; font-size: 10px; }
+.sb-row .sb-name .sb-bot { color: var(--ink-faint); font-size: 10px; }
+.sb-row.self { background: rgba(217, 184, 109, 0.1); }
+.sb-row.self .sb-name { color: var(--gold-bright); }
+.sb-row.squad .sb-name { color: var(--team-squad); font-weight: 700; }
+.sb-row.squad { box-shadow: inset 2px 0 0 var(--team-squad-deep); }
+
+/* ---------- death screen / class picker (8e-13) ---------- */
+
+/* The full-screen death view carries the owner's frame at the viewport edge
+   (Phase 8e-14). No `fill` — the battlefield stays visible through the
+   center; the border-image slice draws only the ornate band + medallions. */
+.death-screen {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 18px;
+  border: clamp(48px, 7vh, 104px) solid transparent;
+  border-image: url("/ui/frame-ornate.webp") 320 300 320 300 stretch;
+  background: rgba(10, 7, 5, 0.62);
+  z-index: var(--z-death);
+}
+.death-head { text-align: center; }
+.death-head .death-recap { margin: 0; color: var(--ink-dim); font-size: 15px; font-weight: 600; text-shadow: 0 2px 6px #000; }
+.death-head .death-recap b { color: var(--ink); }
+.death-head .death-recap .dir { color: var(--err); }
+.death-head .flavor {
+  max-width: 460px;
+  margin: 6px auto 0;
+  padding: 0 20px;
+  color: rgba(239, 230, 210, 0.72);
+  font-size: 13.5px;
+  line-height: 1.5;
+  text-shadow: 0 2px 6px #000;
+}
+.death-head .flavor::before { content: "“"; }
+.death-head .flavor::after { content: "”"; }
+/* Phase 8e-25 (D2/D3): the death flow must be completable at any window
+   size — the body is height-capped so short windows scroll internally
+   instead of clipping the deploy button, and it wraps so the mid-size row
+   band never overflows horizontally. */
+.death-body {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 18px;
+  flex-wrap: wrap;
+  max-width: calc(100vw - 24px);
+  max-height: 100%;
+  min-height: 0;
+  overflow-y: auto;
+}
+/* Bronze edge language (not the full ornate frame — the map canvas must not
+   be cropped or textured behind; readability guard). */
+.death-map { position: relative; flex: none; border: 2px solid rgba(201, 180, 138, 0.55); border-radius: 6px; overflow: hidden; box-shadow: inset 0 0 0 1px rgba(17, 11, 6, 0.8), 0 18px 50px rgba(0, 0, 0, 0.5); }
+.death-map .minimap { padding: 0; border: none; background: none; box-shadow: none; }
+.spawn-marker {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  transform: translate(-50%, -50%);
+  border: 2px solid var(--gold-bright);
+  border-radius: 50%;
+  background: rgba(16, 11, 6, 0.75);
+  cursor: pointer;
+  padding: 0;
+  transition: background var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
+}
+.spawn-marker.home { border-radius: 3px; }
+.spawn-marker:hover { background: rgba(217, 184, 109, 0.55); }
+.spawn-marker.selected { background: var(--gold-bright); box-shadow: 0 0 10px rgba(244, 213, 141, 0.8); }
+.death-map-caption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 4px;
+  text-align: center;
+  color: rgba(239, 230, 210, 0.66);
+  font-size: 10.5px;
+  text-shadow: 0 1px 4px #000;
+  pointer-events: none;
+}
+/* The picker + deploy plaque carries the frame band (no fill — its own dark
+   ground stays, so the cards inside read card-on-panel). */
+.death-side {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: min(430px, calc(100vw - 24px));
+  padding: 12px;
+  border: 20px solid transparent;
+  border-image: url("/ui/frame-ornate.webp") 320 300 320 300 / 20px 18px stretch;
+  background: rgba(16, 11, 6, 0.82);
+}
+.class-picker { display: grid; gap: 8px; }
+.class-picker > small { color: var(--ink-faint); font-size: 11px; text-align: center; }
+.class-picker > small.warn { color: var(--err); }
+.class-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 7px; }
+.menu-class-tab .class-grid { grid-template-columns: repeat(4, 1fr); }
+.class-card {
+  display: grid;
+  gap: 3px;
+  padding: 8px 10px;
+  text-align: left;
+  font: inherit;
+  color: var(--ink);
+  /* Opaque warm-bronze card chrome — the kill feed must not bleed through on
+     the death screen, and the cards must stay distinct on the framed
+     plaque behind them. */
+  background: linear-gradient(170deg, #2c2113, #1c1409);
+  border: 1px solid var(--chrome-line-strong);
+  border-radius: var(--r-chip);
+  transition: background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
+}
+.class-card:hover:not(:disabled) { background: linear-gradient(rgba(226, 187, 116, 0.14), rgba(226, 187, 116, 0.14)), linear-gradient(170deg, #2c2113, #1c1409); }
+.class-card.selected { border-color: var(--gold-bright); background: linear-gradient(rgba(226, 187, 116, 0.26), rgba(226, 187, 116, 0.26)), linear-gradient(170deg, #2c2113, #1c1409); box-shadow: 0 0 0 1px var(--gold-bright) inset; }
+.class-card:disabled { opacity: 0.38; cursor: default; }
+.class-card-head { display: flex; align-items: center; gap: 7px; }
+/* Parchment class tile (Phase 8e-14, owner's icon sheet) — bright on the
+   dark card by design, with a thin bronze edge tying it to the chrome. */
+.class-card-head .class-icon {
+  flex: none;
+  width: 26px;
+  height: 35px;
+  object-fit: cover;
+  border: 1px solid rgba(201, 180, 138, 0.45);
+  border-radius: 3px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+}
+.class-card-head strong { font-size: 13px; }
+.class-card-head kbd {
+  padding: 1px 5px;
+  border: 1px solid var(--chrome-line);
+  border-radius: 3px;
+  font: 700 9px var(--font-hud);
+  color: var(--ink-faint);
+}
+.class-card-head .cap { margin-left: auto; font: 600 9px var(--font-hud); letter-spacing: 0.06em; color: var(--ink-faint); }
+.class-card-role { font: 600 10.5px var(--font-hud); text-transform: uppercase; letter-spacing: 0.05em; color: var(--gold-bright); }
+.class-card-weapons { font-size: 11px; color: var(--ink-dim); }
+.deploy-button {
+  padding: 13px 18px;
+  border: 1px solid var(--chrome-line-strong);
+  border-radius: var(--r-chip);
+  color: #1a201a;
+  background: linear-gradient(180deg, var(--gold-bright), var(--gold));
+  font-weight: 800;
+  font-size: 16px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: filter var(--dur-fast) var(--ease-out), opacity var(--dur-fast) var(--ease-out);
+}
+.deploy-button kbd { margin-left: 8px; font: 700 11px var(--font-hud); }
+.deploy-button:disabled { opacity: 0.45; cursor: default; filter: grayscale(0.5); }
+.deploy-button:not(:disabled):hover { filter: brightness(1.08); }
+.menu-resume {
+  padding: 7px 14px;
+  border: 1px solid var(--chrome-line-strong);
+  border-radius: var(--r-chip);
+  color: #1a201a;
+  background: linear-gradient(180deg, var(--gold-bright), var(--gold));
+  font-weight: 800;
+  font-size: 13px;
+}
+.menu-resume kbd { margin-left: 6px; font: 700 9px var(--font-hud); }
+.menu-class-live { margin: 2px 0 10px; color: var(--ink-dim); font-size: 13px; }
+.menu-class-live b { color: var(--ink); }
+.loadout .queued-class {
+  align-self: center;
+  margin-left: 8px;
+  padding: 2px 8px;
+  border: 1px solid var(--chrome-line);
+  border-radius: 999px;
+  color: var(--gold-bright);
+  font: 600 10px var(--font-hud);
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+/* Phase 8e-14: parchment class tiles as chips — the queued-class icon and
+   the cavalry mount indicator (horse tile, per the owner's sprite map). */
+.loadout .queued-class .chip-icon, .loadout .mounted-chip .chip-icon {
+  width: 15px;
+  height: 20px;
+  object-fit: cover;
+  border-radius: 2px;
+  border: 1px solid rgba(201, 180, 138, 0.4);
+}
+.loadout .mounted-chip {
+  align-self: center;
+  margin-left: 8px;
+  padding: 2px 8px;
+  border: 1px solid rgba(201, 180, 138, 0.5);
+  border-radius: 999px;
+  color: var(--ink);
+  background: rgba(44, 33, 19, 0.85);
+  font: 700 10px var(--font-hud);
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* ---------- war ceremony ---------- */
+
+.victory { position: fixed; inset: 0; display: grid; place-content: center; text-align: center; background: rgba(10, 7, 5, 0.4); pointer-events: none; z-index: var(--z-ceremony); }
+/* Framed proclamation plaque (Phase 8e-14) — the dark center fill keeps the
+   gold medal and light text on their intended register. */
+.ceremony {
+  display: grid;
+  justify-items: center;
+  gap: 12px;
+  padding: 26px 42px;
+  max-width: min(680px, calc(100vw - 32px));
+  border: 30px solid transparent;
+  border-image: url("/ui/frame-ornate.webp") 320 300 320 300 fill / 30px 28px stretch;
+  animation: ceremony-in 0.7s var(--ease-out);
+}
+.ceremony .c-medal { filter: drop-shadow(0 0 22px rgba(244, 213, 141, 0.35)); }
+.ceremony h2 { margin: 0; font-size: 46px; text-shadow: 0 3px 14px #000; }
+.ceremony h2.ot { color: var(--team-ot); }
+.ceremony h2.bz { color: var(--team-bz); }
+.ceremony .tally { margin: 0; font: 600 15px var(--font-hud); font-variant-numeric: tabular-nums; color: var(--gold-bright); }
+.medal-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; font-size: 16px; }
+.medal-list li { display: flex; align-items: center; gap: 9px; color: var(--ink); }
+.war-xp { margin: 0; font: 600 13px var(--font-hud); font-variant-numeric: tabular-nums; color: #ffe9ad; }
+.ceremony small { color: var(--ink-dim); font: 500 12px var(--font-hud); }
+@keyframes ceremony-in { 0% { opacity: 0; transform: translateY(14px); } 100% { opacity: 1; transform: none; } }
+
+/* ---------- chat ---------- */
+
+.chat-panel {
+  position: fixed;
+  left: 18px;
+  bottom: 118px;
+  width: min(430px, 42vw);
+  z-index: var(--z-feed);
+  font: 500 12px/1.4 var(--font-body);
+  padding: 7px;
+  border: 1px solid var(--chrome-line);
+  border-radius: var(--r-panel);
+  background: rgba(14, 10, 6, 0.55);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.45);
+}
+.chat-log { display: grid; gap: 3px; margin-bottom: 7px; }
+.chat-log p { margin: 0; padding: 3px 7px; border-radius: 4px; background: rgba(14, 10, 6, 0.5); overflow-wrap: anywhere; }
+.chat-log p.team b { color: var(--ok); }
+.chat-log p.all b { color: var(--gold-bright); }
+.chat-log button { float: right; width: 20px; padding: 0; border: 0; color: var(--ink-faint); background: transparent; }
+.chat-panel form { display: flex; gap: 5px; padding: 6px; background: rgba(14, 10, 6, 0.88); border: 1px solid var(--chrome-line); border-radius: var(--r-chip); }
+.chat-panel form select, .chat-panel form input { color: var(--ink); background: rgba(16, 11, 6, 0.6); border: 1px solid var(--chrome-line); border-radius: 4px; padding: 5px 7px; outline: none; }
+.chat-panel form select:focus, .chat-panel form input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(217, 184, 109, 0.14); }
+.chat-panel form input { min-width: 0; flex: 1; }
+.chat-panel form button { border: 1px solid var(--chrome-line-strong); border-radius: 4px; color: var(--gold-bright); background: rgba(217, 184, 109, 0.1); font-weight: 700; font-size: 12px; padding: 5px 9px; }
+.chat-panel small { display: block; padding: 4px 6px; color: #f0b0a8; }
+
+/* ---------- debug & modals ---------- */
+
+.debug-overlay {
+  position: fixed;
+  left: 14px;
+  top: 48px;
+  width: 250px;
+  padding: 14px;
+  border: 1px solid rgba(120, 255, 180, 0.25);
+  border-radius: var(--r-chip);
+  color: #bfffd7;
+  background: rgba(8, 15, 11, 0.86);
+  font: 12px/1.35 var(--font-hud);
+  backdrop-filter: blur(8px);
+  z-index: var(--z-modal);
+}
+.debug-overlay strong { display: block; margin-bottom: 10px; color: #76ffa6; letter-spacing: 0.08em; }
+.debug-overlay dl { display: grid; grid-template-columns: 1fr auto; gap: 5px 16px; margin: 0; }
+.debug-overlay dt { color: #84ad91; }
+.debug-overlay dd { margin: 0; font-variant-numeric: tabular-nums; }
+.latency-toggle { display: flex; gap: 8px; margin-top: 13px; padding-top: 11px; border-top: 1px solid rgba(120, 255, 180, 0.18); }
+
+.upgrade-backdrop { position: fixed; inset: 0; z-index: var(--z-modal); display: grid; place-items: center; background: rgba(6, 4, 2, 0.72); backdrop-filter: blur(5px); }
+.upgrade-card { width: min(430px, calc(100vw - 40px)); padding: 28px; border: 24px solid transparent; border-radius: 0; border-image: url("/ui/frame-ornate.webp") 320 300 320 300 fill / 24px 22px stretch; background: none; box-shadow: 0 24px 80px #000; }
+.upgrade-card h2 { margin: 4px 0 10px; font-size: 26px; font-weight: 800; }
+.upgrade-card p { color: var(--ink-dim); line-height: 1.5; }
+.upgrade-card input { display: block; width: 100%; box-sizing: border-box; margin: 16px 0 10px; padding: 11px; color: var(--ink); border: 1px solid var(--chrome-line-strong); border-radius: var(--r-chip); background: rgba(16, 11, 6, 0.6); outline: none; }
+.upgrade-card button { margin-right: 7px; padding: 9px 13px; border: 1px solid var(--chrome-line-strong); border-radius: var(--r-chip); color: #1a201a; background: linear-gradient(180deg, var(--gold-bright), var(--gold)); font-weight: 800; }
+.upgrade-card .secondary { background: transparent; color: var(--ink-dim); }
+.upgrade-card small { display: block; margin-top: 12px; color: var(--gold-bright); }
+.success { color: var(--ok); }
+
+/* ---------- small screens & reduced motion ---------- */
+
+@media (max-width: 900px) {
+  .scoreboard { inset: 5% 4%; border-width: 22px; border-image-width: 22px; }
+  .scoreboard-teams { grid-template-columns: 1fr; overflow-y: auto; }
+  .menu-panel { inset: 4% 4%; border-width: 22px; border-image-width: 22px; }
+  .death-screen { border-width: clamp(28px, 5vh, 56px); }
+  .minimap-hud { --minimap-hud-max: 168px; padding: 7px; gap: 5px; }
+  .minimap-head { gap: 7px; }
+  .minimap-key { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px 8px; }
+  .loadout { right: max(10px, env(safe-area-inset-right)); bottom: max(10px, env(safe-area-inset-bottom)); gap: 4px; padding: 6px 7px; }
+  .loadout .slot { width: 36px; height: 36px; }
+  .loadout .slot svg { width: 21px; height: 21px; }
+  .hud-pips { right: max(10px, env(safe-area-inset-right)); bottom: max(100px, calc(96px + env(safe-area-inset-bottom))); }
+  .war-score { grid-template-columns: auto minmax(120px, 180px) auto; }
+  .death-body { flex-direction: column; align-items: center; }
+  .menu-class-tab .class-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 560px) {
+  .signed-in-pill { display: none; }
+  .war-score { gap: 7px; padding-inline: 9px; }
+  .war-score .tickets b { font-size: 14px; }
+  .war-score .tickets small, .war-score .gate small { font-size: 9px; letter-spacing: 0.08em; }
+  .war-score .gate small.objective { letter-spacing: 0.04em; }
+  .hud-right { right: max(8px, env(safe-area-inset-right)); }
+  .minimap { max-width: calc(100vw - 16px); }
+  .minimap-head > b { font-size: 9px; }
+  .minimap-toggle { font-size: 9px; }
+  .scoreboard { inset: 3% 2%; padding: 16px 14px; }
+  .scoreboard-teams { gap: 9px; }
+  .sb-cols, .sb-row { grid-template-columns: minmax(0, 1fr) repeat(3, 34px) 42px; gap: 3px; padding-inline: 8px; }
+  .sb-team-head { padding-inline: 9px; }
+  .sb-team-head b { font-size: 14px; }
+  .sb-team-head small { font-size: 9px; }
+  .kill-line { font-size: 11px; gap: 5px; padding-inline: 7px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kill-line, .toast, .own-kill, .xp-floaty, .vitals .pulse { animation-duration: 0.01s; }
+  .vitals .ammo-num.reloading, .pip.aura { animation: none; }
+  /* Phase 8e-25 (D20): the remaining decorative flashes — reticle pops,
+     damage fade, slot draw, fanfare/ceremony, playtest pulse. Functional hit
+     feedback (damage numbers, hit markers) stays. */
+  .reticle .ret-ready, .reticle.hit .ret-hit, .reticle.kill .ret-kill,
+  .reticle.headshot .ret-headshot-ring, .damage-indicator,
+  .loadout .slot.drawing, .fanfare-vignette, .fanfare-insignia, .fanfare h2,
+  .fanfare p, .medal-ceremony, .playtest-status-dot.connecting { animation-duration: 0.01s; }
+}
+
+/* ---------- playtest controls (Phase 8e-19, F8) ---------- */
+
+/* Dev-only admin panel, medieval skin language: bronze panel, gold edge,
+   ink text — the same chrome registers as the small HUD chips, not the
+   ornate frame (this must stay non-blocking and glanceable while the
+   owner watches the field change under their inputs). */
+.playtest-panel {
+  position: fixed;
+  top: 64px;
+  left: 14px;
+  width: min(272px, calc(100vw - 28px));
+  padding: 10px 12px;
+  border: 1px solid var(--chrome-line-strong);
+  border-radius: 10px;
+  background: linear-gradient(170deg, rgba(46, 34, 20, 0.95), rgba(22, 16, 9, 0.97));
+  box-shadow: 0 10px 34px rgba(0, 0, 0, 0.55);
+  color: var(--ink-dim);
+  font-size: 12px;
+  z-index: var(--z-menu);
+}
+.playtest-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 8px; }
+.playtest-head strong { color: var(--gold-bright); font-size: 13px; letter-spacing: 0.02em; }
+.playtest-close { padding: 0 7px; border: 1px solid var(--chrome-line); border-radius: 6px; background: none; color: var(--ink-dim); font-size: 15px; line-height: 20px; }
+.playtest-close:hover { color: var(--gold-bright); border-color: var(--gold); }
+.playtest-status { display: grid; grid-template-columns: 8px auto 1fr auto; gap: 7px; align-items: center; margin-bottom: 10px; padding: 7px 8px; border: 1px solid var(--chrome-line); border-radius: 6px; background: rgba(10, 7, 4, 0.45); font-size: 10px; }
+.playtest-status b { color: var(--ink); }
+.playtest-status code { overflow: hidden; color: var(--ink-faint); font: 500 9px/1.2 var(--font-hud); text-overflow: ellipsis; white-space: nowrap; }
+.playtest-status button, .playtest-reset { border: 1px solid var(--chrome-line-strong); border-radius: 5px; background: rgba(217, 184, 109, 0.09); color: var(--gold-bright); font: 700 10px/1 var(--font-hud); }
+.playtest-status button { padding: 5px 7px; }
+.playtest-status-dot { width: 7px; height: 7px; border-radius: 50%; background: #8a7560; box-shadow: 0 0 0 2px rgba(138, 117, 96, 0.15); }
+.playtest-status-dot.connected { background: #72a973; box-shadow: 0 0 0 2px rgba(114, 169, 115, 0.18); }
+.playtest-status-dot.offline { background: #d05f50; box-shadow: 0 0 0 2px rgba(208, 95, 80, 0.18); }
+.playtest-status-dot.connecting { animation: playtest-pulse 1s ease-in-out infinite alternate; }
+@keyframes playtest-pulse { to { opacity: 0.35; } }
+.playtest-body { display: grid; gap: 10px; }
+.playtest-row { display: grid; gap: 5px; }
+.playtest-row > span { color: var(--ink); }
+.playtest-row b { color: var(--gold-bright); }
+.playtest-row input[type="range"] { width: 100%; accent-color: var(--gold); }
+.playtest-row fieldset, .playtest-row legend { border: 0; margin: 0; padding: 0; }
+.playtest-row legend { color: var(--gold); font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px; }
+.playtest-radio { display: flex; gap: 7px; align-items: flex-start; padding: 3px 0; color: var(--ink); }
+.playtest-radio input { margin-top: 2px; accent-color: var(--gold); }
+.playtest-radio small { display: block; color: var(--ink-faint); font-size: 10.5px; }
+.playtest-check { display: flex; gap: 7px; align-items: center; color: var(--ink); }
+.playtest-check input { accent-color: var(--gold); }
+.playtest-audio { display: grid; gap: 3px; padding-top: 7px; border-top: 1px solid var(--chrome-line); color: var(--ink-faint); font: 500 10px/1.35 var(--font-hud); }
+.playtest-audio strong { color: var(--gold); text-transform: uppercase; letter-spacing: 0.08em; font-size: 10px; }
+.playtest-note { margin: 6px 0 0; color: var(--ink-faint); font-size: 11px; }
+.playtest-error { color: #e0695c; }
+.playtest-reset { justify-self: start; padding: 7px 10px; }
+.playtest-reset:hover:not(:disabled) { border-color: var(--gold); background: rgba(217, 184, 109, 0.16); }
+.playtest-reset:disabled, .playtest-status button:disabled { opacity: 0.5; cursor: wait; }
+.playtest-busy { color: var(--ink-faint); }

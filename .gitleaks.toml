@@ -1,0 +1,12 @@
+# Verified false positives: an .env.example placeholder, an example UUID used as a
+# test auth id, and a fake guest token in a protocol test. None is a real secret.
+[extend]
+useDefault = true
+
+[allowlist]
+regexTarget = "match"
+regexes = [
+  '''replace-with-an-independent-32-byte-secret''',
+  '''123e4567-e89b-12d3-a456-426614174000''',
+  '''guest\.abcd1234''',
+]

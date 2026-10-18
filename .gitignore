@@ -1,0 +1,63 @@
+node_modules/
+.DS_Store
+dist/
+.next/
+*.log
+*.tsbuildinfo
+.env*
+!.env.example
+data/
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+asset-drop/
+
+# Unreferenced 3D asset bulk (218 MB) — kept locally in client/models-dormant/
+# (out of public/ so Vite does not copy it into dist), not in git history.
+#   characters/, animations/  — the rigged pack, dormant until Phase 8c-11
+#   unreferenced/             — Phase 8e-4: the 244 shipped-but-unused glbs that
+#                               were sitting in public/ and being copied into
+#                               every build. public/models/ now holds exactly the
+#                               19 files models/manifest.ts references (1.1 MB,
+#                               down from 16 MB). Restore any file by moving it
+#                               back and adding it to the manifest.
+client/models-dormant/
+
+# Tool scratch files
+_tmp_*
+.pnpm-store/
+
+# Meshy pipeline bulk: user reference renders, generated GLBs, thumbnails.
+# Manifest + meta JSONs (license records) stay tracked.
+client/models-inbox/refs/
+client/models-inbox/glb/
+client/models-inbox/thumbs/
+
+# Owner image drops + review bulk (Phase 8e-14): processed outputs ship from
+# client/public/ui/; the source renders stay local.
+client/models-inbox/*.png
+client/models-inbox/*.jpg
+client/models-inbox/anims/
+client/models-inbox/redcoats-feedback/
+
+# Phase 8e-25 (reference-parity closure): the local Redcoats reference scrape
+# (design parameters, screenshots, downloaded reference assets — ~180 MB) is
+# for comparison work only. It is never copied into a build, a Docker image,
+# or a static host, and it must never enter git: the game, the marketing
+# site, and the API ship only licensed/owner-generated content. The owner
+# keeps this directory local (docs/decisions/0075 covers the serving-surface
+# verification).
+redcoats-scraper/
+
+# Phase 8e-24/8e-25 probe output (Playwright screenshots, CDP traces).
+output/
+
+# Next.js static export output (served by Caddy at deploy time).
+web/out/
+
+# local tooling
+.claude/
+CLAUDE.md
+AGENTS.md
+docs/image-feedback/
